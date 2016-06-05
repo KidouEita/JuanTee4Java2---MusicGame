@@ -6,7 +6,8 @@ import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
-import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.input.KeyCode;
@@ -20,12 +21,14 @@ import javafx.util.Duration;
 import javafx.scene.text.*;
 
 public class MusicGame extends Application {
+    
+    Media mp3 = new Media(this.getClass().getResource("Test.mp3").toString());
+    MediaPlayer player = new MediaPlayer(mp3);
     @Override // Override the start method in the Application class
     public void start(Stage primaryStage) {
-        
+    
         /* Statement to play Music */
-        AudioClip AU = new AudioClip(getClass().getResource("Test.mp3").toString());
-        AU.play();
+        player.play();
         
         BorderPane pane = new BorderPane();
         Text ScoreBoard =new Text();
@@ -40,8 +43,14 @@ public class MusicGame extends Application {
 
         // Add or remove a ball
         // Pause and resume animation
-        ballPaneA.setOnMousePressed(e -> ballPaneA.pause());
-        ballPaneA.setOnMouseReleased(e -> ballPaneA.play());
+        ballPaneA.setOnMousePressed(e -> {
+            ballPaneA.pause();
+            player.pause();
+        });
+        ballPaneA.setOnMouseReleased(e -> {
+            ballPaneA.play();
+            player.play();
+        });
         // Use a scroll bar to control animation speed
         ScrollBar sbSpeed = new ScrollBar();
         sbSpeed.setMax(20);
