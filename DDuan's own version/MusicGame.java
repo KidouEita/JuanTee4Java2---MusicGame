@@ -1,19 +1,21 @@
 package musicgame;
 
+import java.util.Random;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.AudioClip;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -21,12 +23,11 @@ import javafx.util.Duration;
 import javafx.scene.text.*;
 
 public class MusicGame extends Application {
-    
     Media mp3 = new Media(this.getClass().getResource("Test.mp3").toString());
     MediaPlayer player = new MediaPlayer(mp3);
     @Override // Override the start method in the Application class
     public void start(Stage primaryStage) {
-    
+        
         /* Statement to play Music */
         player.play();
         
@@ -41,16 +42,6 @@ public class MusicGame extends Application {
         HBox hBox = new HBox(10);
         hBox.setAlignment(Pos.CENTER);
 
-        // Add or remove a ball
-        // Pause and resume animation
-        ballPaneA.setOnMousePressed(e -> {
-            ballPaneA.pause();
-            player.pause();
-        });
-        ballPaneA.setOnMouseReleased(e -> {
-            ballPaneA.play();
-            player.play();
-        });
         // Use a scroll bar to control animation speed
         ScrollBar sbSpeed = new ScrollBar();
         sbSpeed.setMax(20);
@@ -66,6 +57,7 @@ public class MusicGame extends Application {
         }
 
     private class MusicPaneA extends Pane {
+        private boolean pause = false;
         private boolean isSPressed, isDPressed, isFPressed,isSpacePressed,
             isJPressed,isKPressed,isLPressed;
         private Timeline animation;
@@ -115,8 +107,17 @@ public class MusicGame extends Application {
         }
 
         public void add(double x,int i) {
-            ball[i] = new Ball(x, 30, 20, Color.BLACK);
+            ball[i] = new Ball(x, 30, 20,randomcolor());
             getChildren().add(ball[i]); 
+        }
+        
+        public Color randomcolor(){
+            Random rand = new Random();
+            double r = rand.nextFloat();
+            double g = rand.nextFloat();
+            double b = rand.nextFloat();
+            Color color = null;
+            return color = color.color(r,g,b);
         }
         
         public void remover(Ball ball){
@@ -177,6 +178,16 @@ public class MusicGame extends Application {
                     isKPressed = false ;
                 else if(e.getCode().equals(KeyCode.L))
                     isLPressed = false;
+                else if ((e.getCode().equals(KeyCode.ENTER))&&pause == false){
+                    pause();
+                    player.pause();
+                    pause = true;
+                }
+                else if ((e.getCode().equals(KeyCode.ENTER))&&pause == true){
+                    play();
+                    player.play(); //no pause method QAQ
+                    pause = false;
+                }
             });
         }
         
