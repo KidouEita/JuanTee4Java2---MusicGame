@@ -1,3 +1,5 @@
+package application;
+
 import javafx.animation.AnimationBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -215,14 +217,14 @@ public class MusicGame extends Application {
 		    	  }
 		      }
 		      if(ball[i].getCenterX() == 150 ){
-		    	  if(ball[i].getCenterY()<=390 && ball[i].getCenterY()>=350){
+		    	  if(ball[i].getCenterY()<=380 && ball[i].getCenterY()>=350){
 		    		if(isDPressed==true){
 		    			remover(ball[i]);
 		    			Score += 250;
 		    			isDPressed = false;
 		    		}
 		    	  }
-		    	  if(ball[i].getCenterY()<=400 && ball[i].getCenterY()>=390){
+		    	  if(ball[i].getCenterY()<=400 && ball[i].getCenterY()>=380){
 		    		if(isDPressed==true){
 		    			remover(ball[i]);
 		    			Score += 650;
@@ -237,7 +239,7 @@ public class MusicGame extends Application {
 		    		}
 		    	  }
 		      }
-		      if(ball[i].getCenterX() == 250 && ball[i].getCenterY()<=400 && ball[i].getCenterY() >=350){
+		      if(ball[i].getCenterX() == 250){
 		    	  if(ball[i].getCenterY()<=390 && ball[i].getCenterY()>=350){
 		    		if(isFPressed==true){
 		    			remover(ball[i]);
@@ -245,7 +247,7 @@ public class MusicGame extends Application {
 		    			isFPressed = false;
 		    		}
 		    	  }
-		    	  if(ball[i].getCenterY()<=400 && ball[i].getCenterY()>=390){
+		    	  if(ball[i].getCenterY()<=400 && ball[i].getCenterY()>=380){
 		    		if(isFPressed==true){
 		    			remover(ball[i]);
 		    			Score += 650;
