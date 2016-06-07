@@ -1,34 +1,24 @@
 package application;
 
-import javafx.animation.AnimationBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.image.Image;
+import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import javafx.scene.text.*;
 import javafx.scene.media.*;
 import java.io.File;
+import java.util.LinkedList;
 
 
 public class MusicGame extends Application {
@@ -43,7 +33,7 @@ public class MusicGame extends Application {
     ComboBoard.setLayoutY(150);
     pane.getChildren().add(ScoreBoard);
     pane.getChildren().add(ComboBoard);
-	Scene scene = new Scene(pane, 1000, 550);
+	Scene scene = new Scene(pane, 1200, 550);
     MusicPaneA ballPaneA = new MusicPaneA(scene,ScoreBoard,ComboBoard);
     HBox hBox = new HBox(10);
     hBox.setAlignment(Pos.CENTER);
@@ -53,12 +43,7 @@ public class MusicGame extends Application {
     ballPaneA.setOnMousePressed(e -> ballPaneA.pause());
     ballPaneA.setOnMouseReleased(e -> ballPaneA.play());
     // Use a scroll bar to control animation speed
-    ScrollBar sbSpeed = new ScrollBar();
-    sbSpeed.setMax(20);
-    sbSpeed.setValue(10);
-    ballPaneA.rateProperty().bind(sbSpeed.valueProperty());
     pane.setCenter(ballPaneA);
-    pane.setTop(sbSpeed);
     pane.setBottom(hBox);
     // Create a scene and place the pane in the stage
     primaryStage.setTitle("MusicGame"); // Set the stage title
@@ -71,52 +56,48 @@ public class MusicGame extends Application {
                    isJPressed,isKPressed,isLPressed;
     private Timeline animation;
     private Timeline animationA;
+    private Timeline perfectAnimation;
     private Timeline DynamicScore;
     private Timeline DynamicCombo;
     Media Anima;
     MediaPlayer player;
-	Ball[] ball = new Ball[1000];
+    LinkedList<Node> board= new LinkedList<Node>(); 
 	Line line1 = new Line();
 	private int Score = 0;
-	private int Combo = 0;
+	private int Combo = 0;;
+	private BoarderLightView boarderlight;
 	
 	
     public MusicPaneA(Scene scene,Text text,Text text1) {
       // Create an animation for moving the ball
-	  for(int i = 0 ; i<ball.length ; i++){
-		  ball[i] = new Ball(i, 30, 20, Color.BLACK);
-	  }
-  	  String path = "C:/Users/Hank/workspace/Music/src/application/Deemo 2.0 - Xi - Anima.mp3";
+  	  String path = "C:/Users/Hank/workspace/MusicGame/src/application/Deemo 2.0 - Xi - Anima.mp3";
   	  Anima = new Media(new File(path).toURI().toString());
   	  player = new MediaPlayer(Anima);
   	  player.play();
 	  line1.setStroke(Color.YELLOWGREEN);
 	  line1.setStrokeWidth(10);
 	  line1.setStartX(0);
-	  line1.setEndX(1000);
+	  line1.setEndX(1200);
 	  line1.setStartY(400);
 	  line1.setEndY(400);
 	  getChildren().add(line1);
-        animation = new Timeline(
-        new KeyFrame(Duration.millis(25), e -> moveBall(scene)));
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.play(); // Start animation
-        animationA = new Timeline(
-    	        new KeyFrame(Duration.millis(500), e -> add(50,0)),
-    	        new KeyFrame(Duration.millis(500), e -> add(150,1)),
-    	        new KeyFrame(Duration.millis(500), e -> add(250,2)),
-    	        new KeyFrame(Duration.millis(750), e -> add(150,3)),
-    	        new KeyFrame(Duration.millis(1000), e -> add(50,7)),
-    	        new KeyFrame(Duration.millis(1250), e -> add(150,8)),
-    	        new KeyFrame(Duration.millis(1500), e -> add(50,14)),
-    	        new KeyFrame(Duration.millis(1750), e -> add(150,15)),
-    	        new KeyFrame(Duration.millis(2000), e -> add(50,21)),
-    	        new KeyFrame(Duration.millis(2250), e -> add(150,22)),
-    	        new KeyFrame(Duration.millis(2500), e -> add(50,28)),
-    	        new KeyFrame(Duration.millis(2750), e -> add(150,29)),
-    	        new KeyFrame(Duration.millis(3250), e -> add(250,9)));
-      animationA.setCycleCount(Timeline.INDEFINITE);
-      animationA.play();
+      animation = new Timeline(
+      new KeyFrame(Duration.millis(25), e -> moveBall(scene)));
+      animation.setCycleCount(Timeline.INDEFINITE);
+      animation.setRate(5);
+      animation.play(); 
+      animationA = new Timeline(
+    	        new KeyFrame(Duration.millis(450), e -> add(150,0)),
+    	        new KeyFrame(Duration.millis(450), e -> add(300,1)),
+    	        new KeyFrame(Duration.millis(450), e -> add(450,2)),
+    	        new KeyFrame(Duration.millis(650), e -> add(150,3)),
+    	        new KeyFrame(Duration.millis(850), e -> add(600,4)),
+    	        new KeyFrame(Duration.millis(1000), e -> add(450,5)),
+    	        new KeyFrame(Duration.millis(1150), e -> add(600,6)));
+  	  animationA.play();
+  	  perfectAnimation = new Timeline(
+  			new KeyFrame(Duration.millis(1), e -> perfect(150)),
+  			new KeyFrame(Duration.millis(1000), e -> perfectremove()));
       DynamicScore = new Timeline(
     		  new KeyFrame( Duration.millis(25), e -> printScore(text)));
       DynamicScore.setCycleCount(Timeline.INDEFINITE);
@@ -126,16 +107,22 @@ public class MusicGame extends Application {
       DynamicCombo.setCycleCount(Timeline.INDEFINITE);
       DynamicCombo.play();
     }
-
-    public void add(double x,int i) {
-    	ball[i] = new Ball(x, 30, 20, Color.BLACK);
-    	getChildren().add(ball[i]); 
+    public void perfect(double x){
+    	boarderlight = new BoarderLightView(x,395);
+    	getChildren().add(boarderlight);
     }
-    public void remover(int i){
-    	getChildren().remove(ball[i]);
-    	ball[i] = new Ball(0, 0, 0, Color.BLACK);
+    public void perfectremove(){
+    	getChildren().remove(boarderlight);
     }
-
+    public void add(double x,int y) {
+    	board.add(new BoarderView(x,0));
+    	board.get(y).setLayoutX(x);
+    	getChildren().add(board.get(y));
+    }
+    public void remove(Node balla){
+    	board.remove(balla);
+    	getChildren().remove(balla);
+    }
 
     public void play() {
       animation.play();
@@ -148,14 +135,6 @@ public class MusicGame extends Application {
       animationA.pause();
       player.pause();
       
-    }
-    public void increaseSpeed() {
-      animation.setRate(animation.getRate() + 0.1);
-    }
-
-    public void decreaseSpeed() {
-      animation.setRate(
-        animation.getRate() > 0 ? animation.getRate() - 0.1 : 0);
     }
     
     public void Pressed(Scene scene){
@@ -195,6 +174,191 @@ public class MusicGame extends Application {
                 isLPressed = false;
        });
     }
+    protected void moveBall(Scene scene) {
+    	Pressed(scene);
+    	Released(scene);
+    	for(Node balla : board){	
+		balla.setLayoutY(1 + balla.getLayoutY());
+    	if(balla.getLayoutY() >= getHeight()){
+    		Combo = 0;
+    		remove(balla);
+    	} 
+	      if(balla.getLayoutX() == 150){
+	    	  if(balla.getLayoutY()<=350 && balla.getLayoutY()>=250){
+	    		if(isSPressed==true){
+	    			remove(balla);
+	    			Combo = 0 ;
+	    			isSPressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY()<=380 && balla.getLayoutY()>=350){
+	    		if(isSPressed==true){
+	    			remove(balla);;
+	    			Score += 250;
+	    			Combo +=1;
+	    			isSPressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY()<=400 && balla.getLayoutY()>=380){
+	    		if(isSPressed==true){
+	    			remove(balla);
+	    			Score += 650;
+	    			Combo +=1;	
+	    			isSPressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY()<=450 && balla.getLayoutY()>=400){
+	    		if(isSPressed==true){
+	    			remove(balla);
+	    			Score += 450;
+	    			Combo +=1;
+	    			isSPressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY() <=500 && balla.getLayoutY()>=450){
+	    		if(isSPressed==true){
+	    			remove(balla);
+	    			Combo = 0 ;
+	    			isSPressed = false;
+	    		}
+	    	  }
+		      if(balla.getLayoutY() >=510){
+		    	  Combo = 0;
+		      }
+	      }
+	      if(balla.getLayoutX() == 300 ){
+	    	  if(balla.getLayoutY() <=350 && balla.getLayoutY()>=250){
+	    		if(isDPressed==true){
+	    			remove(balla);
+	    			Combo = 0 ;
+	    			isDPressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY() <=380 && balla.getLayoutY() >=350){
+	    		if(isDPressed==true){
+	    			remove(balla);
+	    			Score += 250;
+	    			Combo +=1;
+	    			isDPressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY() <=400 && balla.getLayoutY() >=380){
+	    		if(isDPressed==true){
+	    			remove(balla);
+	    			Score += 650;
+	    			Combo +=1;
+	    			isDPressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY()<=450 && balla.getLayoutY() >=400){
+	    		if(isDPressed==true){
+	    			remove(balla);
+	    			Score += 450;
+	    			Combo +=1;
+	    			isDPressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY() <=500 && balla.getLayoutY() >=450){
+	    		if(isDPressed==true){
+	    			remove(balla);
+	    			Combo = 0 ;
+	    			isDPressed = false;
+	    		}
+	    	  }
+		      if(balla.getLayoutY() >=510){
+		    	  Combo = 0;
+		      }
+	      }
+	      if(balla.getLayoutX() == 450){
+	    	  if(balla.getLayoutY() <=350 && balla.getLayoutY() >=250){
+	    		if(isFPressed==true){
+	    			remove(balla);;
+	    			Combo = 0 ;
+	    			isFPressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY() <=380 && balla.getLayoutY() >=350){
+	    		if(isFPressed==true){
+	    			remove(balla);
+	    			Score += 250;
+	    			Combo +=1;
+	    			isFPressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY() <=400 && balla.getLayoutY() >=380){
+	    		if(isFPressed==true){
+	    			remove(balla);
+	    			Score += 650;
+	    			Combo +=1;
+	    			perfectAnimation.play();
+	    			isFPressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY() <=450 && balla.getLayoutY() >=400){
+	    		if(isFPressed==true){
+	    			remove(balla);
+	    			Score += 450;
+	    			Combo +=1;
+	    			isFPressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY() <=500 && balla.getLayoutY() >=450){
+	    		if(isFPressed==true){
+	    			remove(balla);
+	    			Combo = 0 ;
+	    			isFPressed = false;
+	    		}
+	    	  }
+		      if(balla.getLayoutY()>=510){
+		    	  Combo = 0;
+		      }
+	      }
+	      if(balla.getLayoutX() == 600){
+	    	  if(balla.getLayoutY() <=350 && balla.getLayoutY() >=250){
+	    		if(isSpacePressed==true){
+	    			remove(balla);
+	    			Combo = 0 ;
+	    			isSpacePressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY() <=380 && balla.getLayoutY() >=350){
+	    		if(isJPressed==true){
+	    			remove(balla);
+	    			Score += 250;
+	    			Combo +=1;
+	    			isSpacePressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY() <=400 && balla.getLayoutY() >=380){
+	    		if(isSpacePressed==true){
+	    			remove(balla);
+	    			Score += 650;
+	    			Combo +=1;
+	    			isSpacePressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY() <=450 && balla.getLayoutY() >=400){
+	    		if(isSpacePressed==true){
+	    			remove(balla);
+	    			Score += 450;
+	    			Combo +=1;
+	    			isSpacePressed = false;
+	    		}
+	    	  }
+	    	  if(balla.getLayoutY() <=500 && balla.getLayoutY() >=450){
+	    		if(isSpacePressed==true){
+	    			remove(balla);
+	    			Combo = 0 ;
+	    			isSpacePressed = false;
+	    		}
+	    	  }
+		      if(balla.getLayoutY()>=510){
+		    	  Combo = 0;
+		      }
+	      }
+    	}
+    	
+    }
     
     public void printScore(Text text){
     	text.setText(String.valueOf(Score));
@@ -207,165 +371,28 @@ public class MusicGame extends Application {
     		text.setText(" ");
     	}
     }
-    
-    
-
-    public DoubleProperty rateProperty() {
-      return animation.rateProperty();
-    }
-	protected void moveBall(Scene scene) {
-		Pressed(scene);
-		Released(scene);
-        // Check boundaries
-        // Adjust ball position
-		for(int i = 0 ; i <ball.length ; i = i+1){        
-		      if (ball[i].getCenterY() < ball[i].getRadius() || ball[i].getCenterY() > getHeight() - ball[i].getRadius()) {
-		    	  remover(i);
-		      }
-		      if(ball[i].getCenterX() == 50){
-		    	  if(ball[i].getCenterY()<=350 && ball[i].getCenterY()>=250){
-		    		if(isSPressed==true){
-		    			remover(i);
-		    			Combo = 0 ;
-		    			isSPressed = false;
-		    		}
-		    	  }
-		    	  if(ball[i].getCenterY()<=380 && ball[i].getCenterY()>=350){
-		    		if(isSPressed==true){
-		    			remover(i);
-		    			Score += 250;
-		    			Combo +=1;
-		    			isSPressed = false;
-		    		}
-		    	  }
-		    	  if(ball[i].getCenterY()<=400 && ball[i].getCenterY()>=380){
-		    		if(isSPressed==true){
-		    			remover(i);
-		    			Score += 650;
-		    			Combo +=1;
-		    			isSPressed = false;
-		    		}
-		    	  }
-		    	  if(ball[i].getCenterY()<=450 && ball[i].getCenterY()>=400){
-		    		if(isSPressed==true){
-		    			remover(i);
-		    			Score += 450;
-		    			Combo +=1;
-		    			isSPressed = false;
-		    		}
-		    	  }
-		    	  if(ball[i].getCenterY()<=500 && ball[i].getCenterY()>=450){
-		    		if(isSPressed==true){
-		    			remover(i);
-		    			Combo = 0 ;
-		    			isSPressed = false;
-		    		}
-		    	  }
-			      if(ball[i].getCenterY()>=510){
-			    	  Combo = 0;
-			      }
-		      }
-		      if(ball[i].getCenterX() == 150 ){
-		    	  if(ball[i].getCenterY()<=350 && ball[i].getCenterY()>=250){
-		    		if(isDPressed==true){
-		    			remover(i);
-		    			Combo = 0 ;
-		    			isDPressed = false;
-		    		}
-		    	  }
-		    	  if(ball[i].getCenterY()<=380 && ball[i].getCenterY()>=350){
-		    		if(isDPressed==true){
-		    			remover(i);
-		    			Score += 250;
-		    			Combo +=1;
-		    			isDPressed = false;
-		    		}
-		    	  }
-		    	  if(ball[i].getCenterY()<=400 && ball[i].getCenterY()>=380){
-		    		if(isDPressed==true){
-		    			remover(i);
-		    			Score += 650;
-		    			Combo +=1;
-		    			isDPressed = false;
-		    		}
-		    	  }
-		    	  if(ball[i].getCenterY()<=450 && ball[i].getCenterY()>=400){
-		    		if(isDPressed==true){
-		    			remover(i);
-		    			Score += 450;
-		    			Combo +=1;
-		    			isDPressed = false;
-		    		}
-		    	  }
-		    	  if(ball[i].getCenterY()<=500 && ball[i].getCenterY()>=450){
-		    		if(isDPressed==true){
-		    			remover(i);
-		    			Combo = 0 ;
-		    			isDPressed = false;
-		    		}
-		    	  }
-			      if(ball[i].getCenterY()>=510){
-			    	  Combo = 0;
-			      }
-		      }
-		      if(ball[i].getCenterX() == 250){
-		    	  if(ball[i].getCenterY()<=350 && ball[i].getCenterY()>=250){
-		    		if(isFPressed==true){
-		    			remover(i);
-		    			Combo = 0 ;
-		    			isFPressed = false;
-		    		}
-		    	  }
-		    	  if(ball[i].getCenterY()<=390 && ball[i].getCenterY()>=350){
-		    		if(isFPressed==true){
-		    			remover(i);
-		    			Score += 250;
-		    			Combo +=1;
-		    			isFPressed = false;
-		    		}
-		    	  }
-		    	  if(ball[i].getCenterY()<=400 && ball[i].getCenterY()>=380){
-		    		if(isFPressed==true){
-		    			remover(i);
-		    			Score += 650;
-		    			Combo +=1;
-		    			isFPressed = false;
-		    		}
-		    	  }
-		    	  if(ball[i].getCenterY()<=450 && ball[i].getCenterY()>=400){
-		    		if(isFPressed==true){
-		    			remover(i);
-		    			Score += 450;
-		    			Combo +=1;
-		    			isFPressed = false;
-		    		}
-		    	  }
-		    	  if(ball[i].getCenterY()<=500 && ball[i].getCenterY()>=450){
-		    		if(isFPressed==true){
-		    			remover(i);
-		    			Combo = 0 ;
-		    			isFPressed = false;
-		    		}
-		    	  }
-			      if(ball[i].getCenterY()>=510){
-			    	  Combo = 0;
-			      }
-		      }
-
-			ball[i].setCenterY(ball[i].dy + ball[i].getCenterY());
-    }
   }
+
+
+  class BoarderView extends ImageView{
+	  BoarderView(double x,double y){
+		  super("/application/Boarder.png");
+		  setLayoutX(x);
+		  setLayoutY(y);
+		  setFitHeight(15);
+		  setFitWidth(80);
+		  	
+	  }
   }
-  
-
-
-  class Ball extends Circle {
-    private double dx = 1, dy = 1;
-
-    Ball(double x, double y, double radius, Color color) {
-      super(x, y, radius);
-      setFill(color); // Set ball color
-    }
+  class BoarderLightView extends ImageView{
+	  BoarderLightView(double x,double y){
+		  super("/application/oie_755244M8Ae18ry.gif");
+		  setLayoutX(x);
+		  setLayoutY(y);
+		  setFitHeight(23);
+		  setFitWidth(85);
+		  	
+	  }
   }
   /**
    * The main method is only needed for the IDE with limited
