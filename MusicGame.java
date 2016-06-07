@@ -55,25 +55,25 @@ public class MusicGame extends Application {
     private boolean isSPressed, isDPressed, isFPressed,isSpacePressed,
                    isJPressed,isKPressed,isLPressed;
     private Timeline animation;
+    private Timeline MusicDuration;
     private Timeline animationA;
-    private Timeline perfectAnimation;
     private Timeline DynamicScore;
     private Timeline DynamicCombo;
     Media Anima;
     MediaPlayer player;
     LinkedList<Node> board= new LinkedList<Node>(); 
+    LinkedList<Node> boarderlight = new LinkedList<Node>();
+    LinkedList<Timeline> perfectAnimatedA = new LinkedList<Timeline>();
 	Line line1 = new Line();
 	private int Score = 0;
 	private int Combo = 0;;
-	private BoarderLightView boarderlight;
 	
 	
     public MusicPaneA(Scene scene,Text text,Text text1) {
       // Create an animation for moving the ball
-  	  String path = "C:/Users/Hank/workspace/MusicGame/src/application/Deemo 2.0 - Xi - Anima.mp3";
+  	  String path = "C:/Users/Hank/workspace/Music/src/application/Deemo 2.0 - Xi - Anima.mp3";
   	  Anima = new Media(new File(path).toURI().toString());
   	  player = new MediaPlayer(Anima);
-  	  player.play();
 	  line1.setStroke(Color.YELLOWGREEN);
 	  line1.setStrokeWidth(10);
 	  line1.setStartX(0);
@@ -81,23 +81,20 @@ public class MusicGame extends Application {
 	  line1.setStartY(400);
 	  line1.setEndY(400);
 	  getChildren().add(line1);
+	  MusicDuration = new Timeline(
+			  new KeyFrame(Duration.millis(2000), e->player.play()));
+	  MusicDuration.play();
       animation = new Timeline(
       new KeyFrame(Duration.millis(25), e -> moveBall(scene)));
       animation.setCycleCount(Timeline.INDEFINITE);
       animation.setRate(5);
-      animation.play(); 
+      animation.play();
       animationA = new Timeline(
-    	        new KeyFrame(Duration.millis(450), e -> add(150,0)),
-    	        new KeyFrame(Duration.millis(450), e -> add(300,1)),
-    	        new KeyFrame(Duration.millis(450), e -> add(450,2)),
-    	        new KeyFrame(Duration.millis(650), e -> add(150,3)),
-    	        new KeyFrame(Duration.millis(850), e -> add(600,4)),
-    	        new KeyFrame(Duration.millis(1000), e -> add(450,5)),
-    	        new KeyFrame(Duration.millis(1150), e -> add(600,6)));
+    	        new KeyFrame(Duration.millis(1690), e -> add(150,0)),
+    	        new KeyFrame(Duration.millis(1690), e -> add(300,1)),
+    	        new KeyFrame(Duration.millis(1690), e -> add(450,2)),
+    	        new KeyFrame(Duration.millis(2200), e -> add(150,3)));
   	  animationA.play();
-  	  perfectAnimation = new Timeline(
-  			new KeyFrame(Duration.millis(1), e -> perfect(150)),
-  			new KeyFrame(Duration.millis(1000), e -> perfectremove()));
       DynamicScore = new Timeline(
     		  new KeyFrame( Duration.millis(25), e -> printScore(text)));
       DynamicScore.setCycleCount(Timeline.INDEFINITE);
@@ -106,13 +103,23 @@ public class MusicGame extends Application {
     		  new KeyFrame( Duration.millis(25), e -> printCombo(text1)));
       DynamicCombo.setCycleCount(Timeline.INDEFINITE);
       DynamicCombo.play();
+      for(int i = 0 ;i<8;i++){
+      	  boarderlight.add(new BoarderLightView(i*150,387));
+      	  final int inneri = i ;
+            perfectAnimatedA.add(new Timeline(
+          	  	new KeyFrame(Duration.millis(1), e -> perfectadd(inneri*150+150, inneri)),
+          	  	new KeyFrame(Duration.millis(200), e -> perfectremove(inneri))));
+        }
     }
-    public void perfect(double x){
-    	boarderlight = new BoarderLightView(x,395);
-    	getChildren().add(boarderlight);
+    public void perfectAnimationadd(double x,int y){
+    	perfectAnimatedA.get(y).play();
     }
-    public void perfectremove(){
-    	getChildren().remove(boarderlight);
+    public void perfectadd(double x,int y){
+    	boarderlight.get(y).setLayoutX(x);
+    	getChildren().add(boarderlight.get(y));
+    }
+    public void perfectremove(int y){
+    	getChildren().remove(boarderlight.get(y));
     }
     public void add(double x,int y) {
     	board.add(new BoarderView(x,0));
@@ -127,13 +134,13 @@ public class MusicGame extends Application {
     public void play() {
       animation.play();
       animationA.play();
-      player.play();
+      MusicDuration.play();
     }
 
     public void pause() {
       animation.pause();
       animationA.pause();
-      player.pause();
+      MusicDuration.pause();
       
     }
     
@@ -177,7 +184,7 @@ public class MusicGame extends Application {
     protected void moveBall(Scene scene) {
     	Pressed(scene);
     	Released(scene);
-    	for(Node balla : board){	
+    	for(Node balla : board){
 		balla.setLayoutY(1 + balla.getLayoutY());
     	if(balla.getLayoutY() >= getHeight()){
     		Combo = 0;
@@ -203,6 +210,7 @@ public class MusicGame extends Application {
 	    		if(isSPressed==true){
 	    			remove(balla);
 	    			Score += 650;
+	    			perfectAnimationadd(150,0);
 	    			Combo +=1;	
 	    			isSPressed = false;
 	    		}
@@ -246,6 +254,7 @@ public class MusicGame extends Application {
 	    		if(isDPressed==true){
 	    			remove(balla);
 	    			Score += 650;
+	    			perfectAnimationadd(300,1);
 	    			Combo +=1;
 	    			isDPressed = false;
 	    		}
@@ -289,8 +298,8 @@ public class MusicGame extends Application {
 	    		if(isFPressed==true){
 	    			remove(balla);
 	    			Score += 650;
+	    			perfectAnimationadd(450,2);
 	    			Combo +=1;
-	    			perfectAnimation.play();
 	    			isFPressed = false;
 	    		}
 	    	  }
@@ -333,6 +342,7 @@ public class MusicGame extends Application {
 	    		if(isSpacePressed==true){
 	    			remove(balla);
 	    			Score += 650;
+	    			perfectAnimationadd(600,3);
 	    			Combo +=1;
 	    			isSpacePressed = false;
 	    		}
@@ -356,8 +366,7 @@ public class MusicGame extends Application {
 		    	  Combo = 0;
 		      }
 	      }
-    	}
-    	
+    	} 	
     }
     
     public void printScore(Text text){
@@ -393,6 +402,11 @@ public class MusicGame extends Application {
 		  setFitWidth(85);
 		  	
 	  }
+
+	public Node get(int y) {
+		// TODO Auto-generated method stub
+		return null;
+	}
   }
   /**
    * The main method is only needed for the IDE with limited
