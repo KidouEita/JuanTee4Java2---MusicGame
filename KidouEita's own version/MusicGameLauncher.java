@@ -12,9 +12,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.Scene;
+//import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 //import javafx.scene.paint.Color;
@@ -26,46 +29,57 @@ import javafx.stage.Stage;
  */
 public class MusicGameLauncher extends Application {
     
+    boolean optIn = false; // to check whether user is in the Option Interface
+    
     @Override
     public void start(Stage primaryStage) {
+        
         /* Create Main Pane */
         BorderPane mainPane = new BorderPane();
+        Scene mainScene = new Scene(mainPane, 1200, 550);
+        mainScene.getStylesheets().add(getClass().getResource("Menu.css").toExternalForm());
+        
         /* Set the BackGround of the Main Pane */
-        mainPane.setStyle("-fx-background-color: yellow;");
+        mainPane.setId("mainPane");
+        
         /* Create two pane and add them to the Main Pane */
         Pane menuPane = new Pane();
         menuPane.setPrefSize(250, 550);
+        menuPane.setId("lightWhiteBG");
         Pane sidePane = new Pane();
+        sidePane.setPrefSize(950, 550);
         mainPane.setLeft(menuPane);
         mainPane.setRight(sidePane);
         
-        Label yee = new Label();
-        yee.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("Menu/test.png"))));
-        sidePane.getChildren().add(yee);
+        //sidePane.setStyle("-fx-background-image: url(\"background_image.jpg\");"); // Unknown
+        //sidePane.setStyle("-fx-background-color: red;"); //Effective
         
-        /** Create all Buttons with Label */
+        /** Nodes on the menuPane */
         /* All About Button "Start" */
         Label startBtn = new Label();
         startBtn.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("Menu/Start.png"))));
         startBtn.setLayoutX(40);
         startBtn.setLayoutY(250);
+        /* All About Button "Option" */
+        Label optBtn = new Label();
+        optBtn.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("Menu/Option.png"))));
+        optBtn.setLayoutX(50);
+        optBtn.setLayoutY(320);
         /* All About Button "Help" */
         Label helpBtn = new Label();
         helpBtn.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("Menu/Help.png"))));
-        helpBtn.setLayoutX(70);
-        helpBtn.setLayoutY(320);
+        helpBtn.setLayoutX(50);
+        helpBtn.setLayoutY(390);
         /* All About Button "Exit" */
         Label exitBtn = new Label();
         exitBtn.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("Menu/Exit.png"))));
         exitBtn.setLayoutX(50);
-        exitBtn.setLayoutY(390);
+        exitBtn.setLayoutY(460);
         /* All About Button "Back" */
         Label backBtn = new Label();
         backBtn.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("Menu/Back.png"))));
         backBtn.setLayoutX(50);
         backBtn.setLayoutY(400);
-        backBtn.setVisible(false);
-        
         /* Alert For the "Exit" */
         Alert exitAlert = new Alert(AlertType.CONFIRMATION);
         exitAlert.setTitle("Exit Game?");
@@ -73,47 +87,86 @@ public class MusicGameLauncher extends Application {
         exitAlert.setResizable(false);
         exitAlert.setContentText("Exit Game?");
         exitAlert.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("Menu/Help.png"))));
-        
         /* The List of Songs */
         ListView<Label> songList = new ListView<>();
-        songList.setOpacity(0.7); // set its semi-transparent
+        songList.setEditable(false);
+        songList.getStylesheets().add(getClass().getResource("songList.css").toExternalForm());
+        //songList.setStyle("-fx-background-color: transparent;");
+        songList.setStyle("-fx-background-color: rgba(255, 255,255, 0.2);");
         songList.setLayoutY(50);
         songList.setPrefSize(250, 300);
-        songList.setVisible(false);
-        songList.getItems().addAll(new Label("Song1"),
-                                                new Label("Song2"));
-        songList.getItems().get(0).setOnMouseClicked(e -> System.out.println("1 is Clicked"));// Test Statement
-        songList.getItems().get(1).setOnMouseClicked(e -> System.out.println("2 is Clicked"));// Test Statement
+        songList.getItems().addAll(new Label("Deemo 2.0 - Xi - Anima.mp3"),
+                                                new Label("Song2"),
+                                                new Label("Song3"),
+                                                new Label("Song4"));
+        for(int i = 0;i < songList.getItems().size();i++){
+            songList.getItems().get(i).setPrefSize(234, 20);
+        }
+        songList.getItems().get(0).setOnMouseClicked(e -> System.out.println("Deemo 2.0 - Xi - Anima.mp3 Clicked")); // Test Log
+        songList.getItems().get(1).setOnMouseClicked(e -> System.out.println("2 is Clicked")); // Test Log
+        songList.getItems().get(2).setOnMouseClicked(e -> System.out.println("3 is Clicked")); // Test Log
+        songList.getItems().get(3).setOnMouseClicked(e -> System.out.println("4 is Clicked")); // Test Log
+        /* Make two Groups to contain Buttons(Labels)in the menuPane */
+        Group fstBtns = new Group();
+        fstBtns.getChildren().addAll(startBtn,helpBtn,optBtn,exitBtn); // Contain "Start","Option","Help",and "Exit"
+        Group lstBtns = new Group();
+        lstBtns.getChildren().addAll(backBtn,songList); // Contain "Back" and List of Songs
+        lstBtns.setVisible(false); // Set it's unvisible in the beginning
         
+        /** Nodes on the sidePane */
+        /* Buttons to setting */
+        Label[] hintSetBtns = new Label[7];
+        String[] btnContext = {"Set 1\ndefault S",
+                                            "Set 2\ndefault D",
+                                            "Set 3\ndefault F",
+                                            "Set 4\ndefault Space",
+                                            "Set 5\ndefault J",
+                                            "Set 6\ndefault K",
+                                            "Set 7\ndefault L"};
+        KeyCode[] setBtns = new KeyCode[7];
+        Group btnsInOpt = new Group(); // Group containing Buttons in Option interface
+        for(int i = 0;i<7;i++) {
+            hintSetBtns[i] = new Label(btnContext[i]);
+            btnsInOpt.getChildren().add(hintSetBtns[i]);
+        }
+        
+        
+        
+        
+
         
         /* Buttons' Fuctions */
         exitBtn.setOnMouseClicked(e -> {
-            //exitAlert.showAndWait();
             Optional<ButtonType> resultAlert = exitAlert.showAndWait();
-            if(resultAlert.get() == ButtonType.OK){
-                System.exit(0);
+            if(resultAlert.get() == ButtonType.OK){ // if "OK" is chosen
+                System.exit(0); // End the Program
             }
-        });  //********************need Improvement
+        });
         startBtn.setOnMouseClicked(e -> {
-            startBtn.setVisible(false);
-            helpBtn.setVisible(false);
-            exitBtn.setVisible(false);
-            backBtn.setVisible(true);
-            songList.setVisible(true);
+            optIn = false;
+            fstBtns.setVisible(false);
+            lstBtns.setVisible(true);
+        });
+        optBtn.setOnMouseClicked(e -> {
+            if(optIn){
+                optIn = false;
+            }
+            else{
+                optIn = true;
+            }
+        });
+        helpBtn.setOnMouseClicked(e -> {
+            optIn = false;
         });
         backBtn.setOnMouseClicked(e -> {
-            startBtn.setVisible(true);
-            helpBtn.setVisible(true);
-            exitBtn.setVisible(true);
-            backBtn.setVisible(false);
-            songList.setVisible(false);
+            optIn = false;
+            fstBtns.setVisible(true);
+            lstBtns.setVisible(false);
         });
         
-        
-        
-        menuPane.getChildren().addAll(startBtn,helpBtn,exitBtn,backBtn,songList);
-        Scene mainScene = new Scene(mainPane, 1200, 550);
+        menuPane.getChildren().addAll(fstBtns,lstBtns);
         primaryStage.setTitle("MusicGame");
+        primaryStage.setResizable(false);
         primaryStage.setScene(mainScene);
         primaryStage.show();
     }

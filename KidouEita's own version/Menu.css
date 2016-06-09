@@ -1,0 +1,10 @@
+#mainPane{
+   -fx-background-image: url('Menu/testMainBG.jpg');
+   -fx-background-repeat: round;   
+   -fx-background-position: center center;
+   -fx-background-size: 1200, 550;
+}
+
+#lightWhiteBG{
+   -fx-background-color: rgba(255, 255,255, 0.6);
+}
