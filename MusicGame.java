@@ -19,7 +19,7 @@ import javafx.scene.text.*;
 import javafx.scene.media.*;
 import java.io.File;
 import java.util.LinkedList;
-
+import java.net.URL;
 
 public class MusicGame extends Application {
   @Override // Override the start method in the Application class
@@ -75,11 +75,11 @@ public class MusicGame extends Application {
 	
     public MusicPaneA(Scene scene,Text text,Text text1) {
       // Create an animation for moving the ball
-  	  String path = "C:/Users/Hank/workspace/Music/src/application/Deemo 2.0 - Xi - Anima.mp3";
-  	  Anima = new Media(new File(path).toURI().toString());
+  	  URL resource = getClass().getResource("/application/Deemo 2.0 - Xi - Anima.mp3");
+  	  Anima = new Media(resource.toString());
   	  player = new MediaPlayer(Anima);
 	  MusicDuration = new Timeline(
-			  new KeyFrame(Duration.millis(2000), e->player.play()));
+			  new KeyFrame(Duration.seconds(2), e->player.play()));
 	  MusicDuration.play();
       animation = new Timeline(
       new KeyFrame(Duration.millis(25), e -> moveBall(scene)));
@@ -87,10 +87,85 @@ public class MusicGame extends Application {
       animation.setRate(5);
       animation.play();
       animationA = new Timeline(
-    	        new KeyFrame(Duration.millis(1690), e -> add(150,0)),
-    	        new KeyFrame(Duration.millis(1690), e -> add(300,1)),
-    	        new KeyFrame(Duration.millis(1690), e -> add(900,2)),
-    	        new KeyFrame(Duration.millis(1690), e -> add(1050,3)));
+    	        new KeyFrame(Duration.seconds(1.5), e -> add(100,board.size())),
+    	        new KeyFrame(Duration.seconds(1.5), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(2.8), e -> add(250,board.size())),
+    	        new KeyFrame(Duration.seconds(2.8), e -> add(850,board.size())),
+    	        new KeyFrame(Duration.seconds(4), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(4), e -> add(1000,board.size())),
+    	        new KeyFrame(Duration.seconds(5.57), e -> add(100,board.size())),
+    	        new KeyFrame(Duration.seconds(5.92), e -> add(250,board.size())),
+    	        new KeyFrame(Duration.seconds(6.18), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(6.55), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(6.55), e -> add(1000,board.size())),
+    	        new KeyFrame(Duration.seconds(7.86), e -> add(100,board.size())),
+    	        new KeyFrame(Duration.seconds(7.86), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(8.55), e -> add(250,board.size())),
+    	        new KeyFrame(Duration.seconds(8.55), e -> add(850,board.size())),
+    	        new KeyFrame(Duration.seconds(9.25), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(9.25), e -> add(1000,board.size())),
+    	        new KeyFrame(Duration.seconds(10.9), e -> add(100,board.size())),
+    	        new KeyFrame(Duration.seconds(11.25), e -> add(250,board.size())),
+    	        new KeyFrame(Duration.seconds(11.51), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(11.8), e -> add(550,board.size())),
+    	        new KeyFrame(Duration.seconds(12.8), e -> add(250,board.size())),
+    	        new KeyFrame(Duration.seconds(12.9), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(13.0), e -> add(550,board.size())),
+    	        new KeyFrame(Duration.seconds(13.2), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(14.6), e -> add(100,board.size())),
+    	        new KeyFrame(Duration.seconds(14.6), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(15.2), e -> add(250,board.size())),
+    	        new KeyFrame(Duration.seconds(15.2), e -> add(850,board.size())),
+    	        new KeyFrame(Duration.seconds(15.85), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(15.85), e -> add(1000,board.size())),
+    	        new KeyFrame(Duration.seconds(16.5), e -> add(250,board.size())),
+    	        new KeyFrame(Duration.seconds(16.5), e -> add(850,board.size())),
+    	        new KeyFrame(Duration.seconds(17.07), e -> add(100,board.size())),
+    	        new KeyFrame(Duration.seconds(17.07), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(18.9), e -> add(100,board.size())),
+    	        new KeyFrame(Duration.seconds(19.2), e -> add(250,board.size())),
+    	        new KeyFrame(Duration.seconds(19.2), e -> add(850,board.size())),
+    	        new KeyFrame(Duration.seconds(19.4), e -> add(550,board.size())),
+    	        new KeyFrame(Duration.seconds(19.5), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(19.6), e -> add(850,board.size())),
+    	        new KeyFrame(Duration.seconds(19.7), e -> add(1000,board.size())),
+    	        new KeyFrame(Duration.seconds(19.9), e -> add(1000,board.size())),
+    	        new KeyFrame(Duration.seconds(20.5), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(21.0), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(19.9), e -> add(1000,board.size())),
+    	        new KeyFrame(Duration.seconds(20.05), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(20.15), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(20.25), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(20.35), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(20.45), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(20.55), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(20.65), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(20.75), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(20.85), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(20.95), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(21.05), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(22.50), e -> add(550,board.size())),
+    	        new KeyFrame(Duration.seconds(23.00), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(23.40), e -> add(250,board.size())),
+    	        new KeyFrame(Duration.seconds(23.40), e -> add(850,board.size())),
+    	        new KeyFrame(Duration.seconds(23.75), e -> add(550,board.size())),
+    	        new KeyFrame(Duration.seconds(23.90), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(24.30), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(24.50), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(24.50), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(24.70), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(24.70), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(24.80), e -> add(550,board.size())),
+    	        new KeyFrame(Duration.seconds(24.90), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(25.1), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(25.2), e -> add(400,board.size())),
+    	        new KeyFrame(Duration.seconds(25.3), e -> add(700,board.size())),
+    	        new KeyFrame(Duration.seconds(25.7), e -> add(250,board.size())),
+    	        new KeyFrame(Duration.seconds(25.7), e -> add(850,board.size())),
+    	        new KeyFrame(Duration.seconds(25.9), e -> add(100,board.size())),
+    	        new KeyFrame(Duration.seconds(25.9), e -> add(1000,board.size())),
+    	        new KeyFrame(Duration.seconds(26.4), e -> add(500,board.size())),
+    	        new KeyFrame(Duration.seconds(26.8), e -> add(700,board.size())));
   	  animationA.play();
       DynamicScore = new Timeline(
     		  new KeyFrame( Duration.millis(25), e -> printScore(text)));
@@ -106,13 +181,13 @@ public class MusicGame extends Application {
     	  boarderOK.add(new BoarderOKView(0,387));
     	  final int inneri = i ;
           perfectAnimatedA.add(new Timeline(
-        	  	new KeyFrame(Duration.millis(1), e -> perfectadd(boarderlight,inneri*150+150,inneri)),
+        	  	new KeyFrame(Duration.millis(1), e -> perfectadd(boarderlight,inneri*150+100,inneri)),
         	  	new KeyFrame(Duration.millis(302), e -> perfectremove(boarderlight,inneri))));
           GoodAnimatedA.add(new Timeline(
-          	  	new KeyFrame(Duration.millis(1), e -> perfectadd(boarderGood,inneri*150+150,inneri)),
+          	  	new KeyFrame(Duration.millis(1), e -> perfectadd(boarderGood,inneri*150+100,inneri)),
           	  	new KeyFrame(Duration.millis(302), e -> perfectremove(boarderGood,inneri))));
           OKAnimatedA.add(new Timeline(
-            	  	new KeyFrame(Duration.millis(1), e -> perfectadd(boarderOK,inneri*150+150,inneri)),
+            	  	new KeyFrame(Duration.millis(1), e -> perfectadd(boarderOK,inneri*150+100,inneri)),
             	  	new KeyFrame(Duration.millis(302), e -> perfectremove(boarderOK,inneri))));
       }
     }
@@ -129,7 +204,7 @@ public class MusicGame extends Application {
     	getChildren().remove(boarderlight.get(y));
     }
     public void add(double x,int y) {
-    	board.add(new BoarderView(x,0));
+    	board.add(y,new BoarderView(0,0));
     	board.get(y).setLayoutX(x);
     	getChildren().add(board.get(y));
     }
@@ -197,7 +272,7 @@ public class MusicGame extends Application {
     		Combo = 0;
     		remove(balla);
     	} 
-	      if(balla.getLayoutX() == 150){
+	      if(balla.getLayoutX() == 100){
 	    	  if(balla.getLayoutY()<=300 && balla.getLayoutY()>=250){
 	    		if(isSPressed==true){
 	    			remove(balla);
@@ -261,7 +336,7 @@ public class MusicGame extends Application {
 		    	  Combo = 0;
 		      }
 	      }
-	      if(balla.getLayoutX() == 300 ){
+	      if(balla.getLayoutX() == 250 ){
 	    	  if(balla.getLayoutY() <=300 && balla.getLayoutY()>=250){
 	    		if(isDPressed==true){
 	    			remove(balla);
@@ -318,7 +393,7 @@ public class MusicGame extends Application {
 		    	  Combo = 0;
 		      }
 	      }
-	      if(balla.getLayoutX() == 450){
+	      if(balla.getLayoutX() == 400){
 	    	  if(balla.getLayoutY() <=300 && balla.getLayoutY() >=250){
 	    		if(isFPressed==true){
 	    			remove(balla);;
@@ -382,7 +457,7 @@ public class MusicGame extends Application {
 		    	  Combo = 0;
 		      }
 	      }
-	      if(balla.getLayoutX() == 600){
+	      if(balla.getLayoutX() == 550){
 	    	  if(balla.getLayoutY() <=300 && balla.getLayoutY() >=250){
 	    		if(isSpacePressed==true){
 	    			remove(balla);
@@ -446,7 +521,7 @@ public class MusicGame extends Application {
 		    	  Combo = 0;
 		      }
 	      }
-	      if(balla.getLayoutX() == 750){
+	      if(balla.getLayoutX() == 700){
 	    	  if(balla.getLayoutY() <=300 && balla.getLayoutY() >=250){
 	    		if(isJPressed==true){
 	    			remove(balla);
@@ -510,7 +585,7 @@ public class MusicGame extends Application {
 		    	  Combo = 0;
 		      }
 	      }
-	      if(balla.getLayoutX() == 900){
+	      if(balla.getLayoutX() == 850){
 	    	  if(balla.getLayoutY() <=300 && balla.getLayoutY() >=250){
 	    		if(isKPressed==true){
 	    			remove(balla);
@@ -574,7 +649,7 @@ public class MusicGame extends Application {
 		    	  Combo = 0;
 		      }
 	      }
-	      if(balla.getLayoutX() == 1050){
+	      if(balla.getLayoutX() == 1000){
 	    	  if(balla.getLayoutY() <=300 && balla.getLayoutY() >=250){
 	    		if(isLPressed ==true){
 	    			remove(balla);
