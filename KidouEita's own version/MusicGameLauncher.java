@@ -6,6 +6,7 @@
 package musicgame;
 
 import java.util.Optional;
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -18,10 +19,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.Scene;
 //import javafx.scene.layout.Background;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 //import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -35,10 +37,10 @@ public class MusicGameLauncher extends Application {
     public void start(Stage primaryStage) {
         
         /* Create Main Pane */
-        BorderPane mainPane = new BorderPane();
+        HBox mainPane = new HBox();
         Scene mainScene = new Scene(mainPane, 1200, 550);
         mainScene.getStylesheets().add(getClass().getResource("Menu.css").toExternalForm());
-        
+
         /* Set the BackGround of the Main Pane */
         mainPane.setId("mainPane");
         
@@ -48,8 +50,7 @@ public class MusicGameLauncher extends Application {
         menuPane.setId("lightWhiteBG");
         Pane sidePane = new Pane();
         sidePane.setPrefSize(950, 550);
-        mainPane.setLeft(menuPane);
-        mainPane.setRight(sidePane);
+        mainPane.getChildren().addAll(menuPane,sidePane);
         
         //sidePane.setStyle("-fx-background-image: url(\"background_image.jpg\");"); // Unknown
         //sidePane.setStyle("-fx-background-color: red;"); //Effective
@@ -90,7 +91,7 @@ public class MusicGameLauncher extends Application {
         /* The List of Songs */
         ListView<Label> songList = new ListView<>();
         songList.setEditable(false);
-        songList.getStylesheets().add(getClass().getResource("songList.css").toExternalForm());
+        songList.getStylesheets().add(getClass().getResource("SongList.css").toExternalForm());
         //songList.setStyle("-fx-background-color: transparent;");
         songList.setStyle("-fx-background-color: rgba(255, 255,255, 0.2);");
         songList.setLayoutY(50);
@@ -99,10 +100,23 @@ public class MusicGameLauncher extends Application {
                                                 new Label("Song2"),
                                                 new Label("Song3"),
                                                 new Label("Song4"));
-        for(int i = 0;i < songList.getItems().size();i++){
+        for(int i = 0;i < songList.getItems().size();i++) {
             songList.getItems().get(i).setPrefSize(234, 20);
         }
-        songList.getItems().get(0).setOnMouseClicked(e -> System.out.println("Deemo 2.0 - Xi - Anima.mp3 Clicked")); // Test Log
+
+        FadeTransition songFt = new FadeTransition();
+        ImageView songPic = new ImageView();
+        songPic.setId("song1");
+        songPic.setVisible(false);
+        sidePane.getChildren().add(songPic);
+        songList.getItems().get(0).setOnMouseClicked(e -> {
+            songFt.setNode(songPic);
+            songFt.setDuration(new Duration(1000));
+            songPic.setVisible(true);
+            songFt.setFromValue(0);
+            songFt.setToValue(1);
+            songFt.play();
+        });
         songList.getItems().get(1).setOnMouseClicked(e -> System.out.println("2 is Clicked")); // Test Log
         songList.getItems().get(2).setOnMouseClicked(e -> System.out.println("3 is Clicked")); // Test Log
         songList.getItems().get(3).setOnMouseClicked(e -> System.out.println("4 is Clicked")); // Test Log
@@ -125,12 +139,30 @@ public class MusicGameLauncher extends Application {
                                             "Set 7\ndefault L"};
         KeyCode[] setBtns = new KeyCode[7];
         Group btnsInOpt = new Group(); // Group containing Buttons in Option interface
+        btnsInOpt.setVisible(false);
         for(int i = 0;i<7;i++) {
             hintSetBtns[i] = new Label(btnContext[i]);
+            if (i == 4) {
+                hintSetBtns[i].setLayoutX(540);
+            } else if (i > 4) {
+                hintSetBtns[i].setLayoutX(540 + (i - 4) * 100);
+            } else {
+                hintSetBtns[i].setLayoutX(110 + i * 100);
+            }
+            final int innerI = i; // for setting each Labels' reaction
+            hintSetBtns[i].setLayoutY(300);
             btnsInOpt.getChildren().add(hintSetBtns[i]);
+            hintSetBtns[i].setStyle("-fx-background-color: rgba(255,255,255,0.5);" +
+                    "-fx-text-fill: black;" +
+                    "-fx-text-alignment: center;");
+            hintSetBtns[i].setOnMouseMoved(e -> hintSetBtns[innerI].setStyle("-fx-background-color: rgba(0,0,0,0.5);" +
+                    "-fx-text-fill: white;" +
+                    "-fx-text-alignment: center;"));
+            hintSetBtns[i].setOnMouseExited(e -> hintSetBtns[innerI].setStyle("-fx-background-color: rgba(255,255,255,0.5);" +
+                    "-fx-text-fill: black;" +
+                    "-fx-text-alignment: center;"));
         }
-        
-        
+
         
         
 
@@ -150,9 +182,13 @@ public class MusicGameLauncher extends Application {
         optBtn.setOnMouseClicked(e -> {
             if(optIn){
                 optIn = false;
+                btnsInOpt.setVisible(false);
+                sidePane.setStyle("-fx-background-color: transparent;");
             }
             else{
                 optIn = true;
+                btnsInOpt.setVisible(true);
+                sidePane.setStyle("-fx-background-color: rgba(0,0,0,0.2);");
             }
         });
         helpBtn.setOnMouseClicked(e -> {
@@ -162,9 +198,14 @@ public class MusicGameLauncher extends Application {
             optIn = false;
             fstBtns.setVisible(true);
             lstBtns.setVisible(false);
+            sidePane.setId("sideDefault");
+            songFt.setFromValue(1);
+            songFt.setToValue(0);
+            songFt.play();
         });
         
         menuPane.getChildren().addAll(fstBtns,lstBtns);
+        sidePane.getChildren().addAll(btnsInOpt);
         primaryStage.setTitle("MusicGame");
         primaryStage.setResizable(false);
         primaryStage.setScene(mainScene);
