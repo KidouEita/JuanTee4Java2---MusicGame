@@ -1,0 +1,7 @@
+#gamePane{
+   -fx-background-image: url('MusicInterFace/AnimaPane.png');
+   -fx-background-repeat: round;
+   -fx-background-position: center center;
+   -fx-background-size: 1200, 550;
+   -fx-border-width: 0px;
+}

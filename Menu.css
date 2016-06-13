@@ -19,11 +19,22 @@
 
 
 /* For Songs switch (sidePane) */
-#sideDefault{
+#artPane{
    -fx-background-color: transparent;
    -fx-background-repeat: round;
    -fx-background-position: center center;
 }
+#optPane{
+   -fx-background-color: rgba(0,0,0,0.3);
+   -fx-background-repeat: round;
+   -fx-background-position: center center;
+}
+#setkeyPane{
+   -fx-background-color: rgba(0,0,0,0.3);
+   -fx-background-repeat: round;
+   -fx-background-position: center center;
+}
+
 
 #song1{
    -fx-image: url('Menu/SongList/song1.jpg');
