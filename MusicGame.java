@@ -104,7 +104,7 @@ public class MusicGame {
             Anima = new Media(getClass().getResource("MusicSrc/Deemo 2.0 - Xi - Anima.mp3").toString());
             player = new MediaPlayer(Anima);
             MusicDuration = new Timeline(
-                    new KeyFrame(Duration.seconds(2), e -> player.play()));
+                    new KeyFrame(Duration.seconds(2.325), e -> player.play()));
             MusicDuration.play();
             animation = new Timeline(
                     new KeyFrame(Duration.millis(25), e -> moveBall(scene)));
@@ -774,6 +774,7 @@ public class MusicGame {
                     player.stop();
                     animation.stop();
                     animationA.stop();
+
                     main.setScene(mScene);
                 }
             });
@@ -815,7 +816,7 @@ public class MusicGame {
                             isSPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 300) {
+                    if (balla.getLayoutY() <= 330 && balla.getLayoutY() >= 300) {
                         if (isSPressed) {
                             remove(balla);
                             Score += 250;
@@ -824,7 +825,7 @@ public class MusicGame {
                             isSPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 370 && balla.getLayoutY() >= 350) {
+                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 330) {
                         if (isSPressed) {
                             remove(balla);
                             Score += 450;
@@ -833,7 +834,7 @@ public class MusicGame {
                             isSPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 370) {
+                    if (balla.getLayoutY() <= 380 && balla.getLayoutY() >= 350) {
                         if (isSPressed) {
                             remove(balla);
                             Score += 650;
@@ -842,7 +843,7 @@ public class MusicGame {
                             isSPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 420 && balla.getLayoutY() >= 400) {
+                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 380) {
                         if (isSPressed) {
                             remove(balla);
                             Score += 450;
@@ -851,7 +852,7 @@ public class MusicGame {
                             isSPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 420) {
+                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 400) {
                         if (isSPressed) {
                             remove(balla);
                             Score += 250;
@@ -879,7 +880,7 @@ public class MusicGame {
                             isDPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 300) {
+                    if (balla.getLayoutY() <= 330 && balla.getLayoutY() >= 330) {
                         if (isDPressed) {
                             remove(balla);
                             Score += 250;
@@ -888,7 +889,7 @@ public class MusicGame {
                             isDPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 370 && balla.getLayoutY() >= 350) {
+                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 330) {
                         if (isDPressed) {
                             remove(balla);
                             Score += 450;
@@ -897,7 +898,7 @@ public class MusicGame {
                             isDPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 370) {
+                    if (balla.getLayoutY() <= 380 && balla.getLayoutY() >= 350) {
                         if (isDPressed) {
                             remove(balla);
                             Score += 650;
@@ -906,7 +907,7 @@ public class MusicGame {
                             isDPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 420 && balla.getLayoutY() >= 400) {
+                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 380) {
                         if (isDPressed) {
                             remove(balla);
                             Score += 450;
@@ -915,7 +916,7 @@ public class MusicGame {
                             isDPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 420) {
+                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 400) {
                         if (isDPressed) {
                             remove(balla);
                             Score += 250;
@@ -936,7 +937,7 @@ public class MusicGame {
                             isFPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 300) {
+                    if (balla.getLayoutY() <= 330 && balla.getLayoutY() >= 300) {
                         if (isFPressed) {
                             remove(balla);
                             ;
@@ -946,7 +947,7 @@ public class MusicGame {
                             isFPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 370 && balla.getLayoutY() >= 350) {
+                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 330) {
                         if (isFPressed) {
                             remove(balla);
                             ;
@@ -956,7 +957,7 @@ public class MusicGame {
                             isFPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 370) {
+                    if (balla.getLayoutY() <= 380 && balla.getLayoutY() >= 350) {
                         if (isFPressed) {
                             remove(balla);
                             Score += 650;
@@ -965,7 +966,7 @@ public class MusicGame {
                             isFPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 420 && balla.getLayoutY() >= 400) {
+                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 380) {
                         if (isFPressed) {
                             remove(balla);
                             Score += 450;
@@ -974,7 +975,7 @@ public class MusicGame {
                             isFPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 420) {
+                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 400) {
                         if (isFPressed) {
                             remove(balla);
                             Score += 250;
@@ -1002,7 +1003,7 @@ public class MusicGame {
                             isSpacePressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 300) {
+                    if (balla.getLayoutY() <= 330 && balla.getLayoutY() >= 300) {
                         if (isSpacePressed) {
                             remove(balla);
                             Score += 250;
@@ -1011,7 +1012,7 @@ public class MusicGame {
                             isSpacePressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 370 && balla.getLayoutY() >= 350) {
+                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 330) {
                         if (isSpacePressed) {
                             remove(balla);
                             Score += 450;
@@ -1020,7 +1021,7 @@ public class MusicGame {
                             isSpacePressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 370) {
+                    if (balla.getLayoutY() <= 380 && balla.getLayoutY() >= 350) {
                         if (isSpacePressed) {
                             remove(balla);
                             Score += 650;
@@ -1029,7 +1030,7 @@ public class MusicGame {
                             isSpacePressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 420 && balla.getLayoutY() >= 400) {
+                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 380) {
                         if (isSpacePressed) {
                             remove(balla);
                             Score += 450;
@@ -1038,7 +1039,7 @@ public class MusicGame {
                             isSpacePressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 420) {
+                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 400) {
                         if (isSpacePressed) {
                             remove(balla);
                             Score += 250;
@@ -1066,7 +1067,7 @@ public class MusicGame {
                             isJPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 300) {
+                    if (balla.getLayoutY() <= 330 && balla.getLayoutY() >= 300) {
                         if (isJPressed) {
                             remove(balla);
                             Score += 250;
@@ -1075,7 +1076,7 @@ public class MusicGame {
                             isJPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 370 && balla.getLayoutY() >= 350) {
+                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 330) {
                         if (isJPressed) {
                             remove(balla);
                             Score += 450;
@@ -1084,7 +1085,7 @@ public class MusicGame {
                             isJPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 370) {
+                    if (balla.getLayoutY() <= 380 && balla.getLayoutY() >= 350) {
                         if (isJPressed) {
                             remove(balla);
                             Score += 650;
@@ -1093,7 +1094,7 @@ public class MusicGame {
                             isJPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 420 && balla.getLayoutY() >= 400) {
+                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 380) {
                         if (isJPressed) {
                             remove(balla);
                             Score += 450;
@@ -1102,7 +1103,7 @@ public class MusicGame {
                             isJPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 420) {
+                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 400) {
                         if (isJPressed) {
                             remove(balla);
                             Score += 250;
@@ -1130,7 +1131,7 @@ public class MusicGame {
                             isKPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 300) {
+                    if (balla.getLayoutY() <= 330 && balla.getLayoutY() >= 300) {
                         if (isKPressed) {
                             remove(balla);
                             Score += 250;
@@ -1139,7 +1140,7 @@ public class MusicGame {
                             isKPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 370 && balla.getLayoutY() >= 350) {
+                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 330) {
                         if (isKPressed) {
                             remove(balla);
                             Score += 450;
@@ -1148,7 +1149,7 @@ public class MusicGame {
                             isKPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 370) {
+                    if (balla.getLayoutY() <= 380 && balla.getLayoutY() >= 350) {
                         if (isKPressed) {
                             remove(balla);
                             Score += 650;
@@ -1157,7 +1158,7 @@ public class MusicGame {
                             isKPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 420 && balla.getLayoutY() >= 400) {
+                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 380) {
                         if (isKPressed) {
                             remove(balla);
                             Score += 450;
@@ -1166,7 +1167,7 @@ public class MusicGame {
                             isKPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 420) {
+                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 400) {
                         if (isKPressed) {
                             remove(balla);
                             Score += 250;
@@ -1194,7 +1195,7 @@ public class MusicGame {
                             isLPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 300) {
+                    if (balla.getLayoutY() <= 330 && balla.getLayoutY() >= 300) {
                         if (isLPressed) {
                             remove(balla);
                             ;
@@ -1204,7 +1205,7 @@ public class MusicGame {
                             isLPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 370 && balla.getLayoutY() >= 350) {
+                    if (balla.getLayoutY() <= 350 && balla.getLayoutY() >= 330) {
                         if (isLPressed) {
                             remove(balla);
                             Score += 450;
@@ -1213,7 +1214,7 @@ public class MusicGame {
                             isLPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 370) {
+                    if (balla.getLayoutY() <= 380 && balla.getLayoutY() >= 350) {
                         if (isLPressed) {
                             remove(balla);
                             Score += 650;
@@ -1222,7 +1223,7 @@ public class MusicGame {
                             isLPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 420 && balla.getLayoutY() >= 400) {
+                    if (balla.getLayoutY() <= 400 && balla.getLayoutY() >= 380) {
                         if (isLPressed) {
                             remove(balla);
                             Score += 450;
@@ -1231,7 +1232,7 @@ public class MusicGame {
                             isLPressed = false;
                         }
                     }
-                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 420) {
+                    if (balla.getLayoutY() <= 450 && balla.getLayoutY() >= 400) {
                         if (isLPressed) {
                             remove(balla);
                             Score += 250;
